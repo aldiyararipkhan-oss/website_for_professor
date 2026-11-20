@@ -309,17 +309,38 @@ footer,.cta-band{background:#0c0b09}
 .stat-box{background:var(--bg2);border-color:var(--line2)}
 .list-mini .it{background:var(--bg2);border-color:var(--line)}
 .tabsw button{background:var(--bg2);border-color:var(--line2);color:var(--ink2)}
+/* ---- launch fixes: anchors, focus, case details, privacy view ---- */
+html{scroll-padding-top:72px}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.ccard dl{margin:0;padding:0 32px;flex:1}
+.ccard dt{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-top:12px}
+.ccard dd{margin:4px 0 0;color:var(--ink2);font-size:14.5px;line-height:1.6}
+.ccard .foot{padding:22px 32px 28px}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+.foot-links a{text-decoration:underline;text-underline-offset:3px}
+.ai-dis a{text-decoration:underline;color:inherit}
+.policy{position:fixed;inset:0;z-index:85;background:rgba(8,7,5,.72);backdrop-filter:blur(3px);overflow:auto;padding:24px 16px}
+.policy .sheet{max-width:760px;margin:40px auto;background:var(--bg2);border:1px solid var(--line2);border-radius:6px;padding:36px clamp(20px,5vw,48px) 40px;color:var(--ink)}
+.policy h2{font-size:clamp(24px,6.4vw,40px);margin:0 0 6px;min-width:0;overflow-wrap:anywhere}
+#polTitle:focus{outline:none}
+.policy h3{font-size:19px;margin:26px 0 8px}
+.policy p{color:var(--ink2);margin:0 0 10px;font-size:15px;line-height:1.7}
+.policy a{color:var(--accent);text-decoration:underline}
+.policy .ptop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.policy .px{background:none;border:1px solid var(--line2);color:var(--ink);border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;flex:none}
+@media(max-width:600px){.hero{min-height:auto;padding:104px 0 56px}.hero h1{margin-bottom:6px}.hero .role{margin-bottom:16px}.hero .lead{margin-bottom:26px}.hero .rule{margin-bottom:18px}.hero .eyebrow{margin-bottom:14px}.hero .stats{margin-top:44px}}
 </style>
 </head>
 <body>
 
 <header id="hdr">
   <div class="wrap nav">
-    <a class="logo" href="#top"><img class="mark" src="mono-light.png" alt="Turkenov Consulting" width="24" height="32"> Диас Туркенов</a>
-    <nav class="menu" id="menu">
+    <a class="logo" href="#top"><img class="mark" src="mono-light.png" alt="" width="24" height="32"> Диас Туркенов</a>
+    <nav class="menu" id="menu" aria-label="Меню">
       <a class="link" href="#services">Услуги</a>
       <a class="link" href="#process">Как работаю</a>
-      <a class="link" href="#cases">Кейсы</a>
+      <a class="link" href="#cases" hidden>Кейсы</a>
       <a class="link" href="#faq">Вопросы</a>
       <a class="link" href="#contact">Контакты</a>
       <a class="btn btn-pri" href="#contact" data-i18n="nav_cta">Консультация</a>
@@ -329,13 +350,13 @@ footer,.cta-band{background:#0c0b09}
         <button data-l="en" onclick="setLang('en')">EN</button>
       </div>
     </nav>
-    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <a id="top"></a>
 <section class="hero">
-  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div>
   <div class="wrap">
     <div class="rule reveal"></div>
     <p class="eyebrow reveal">Судебный юрист · Казахстан</p>
@@ -343,7 +364,7 @@ footer,.cta-band{background:#0c0b09}
     <p class="role reveal d1">Защита бизнеса и представительство в суде</p>
     <p class="lead reveal d2">Сопровождаю компании и предпринимателей: веду судебные споры, выстраиваю договорную работу и защищаю интересы там, где на кону деньги и репутация.</p>
     <div class="cta reveal d3">
-      <a class="btn btn-pri" href="#contact">Записаться на консультацию <span class="arrow">→</span></a>
+      <a class="btn btn-pri" href="#contact">Записаться на консультацию <span class="arrow" aria-hidden="true">→</span></a>
       <button class="btn btn-ghost" onclick="openAI()">Спросить ИИ-ассистента</button>
     </div>
     <div class="stats reveal d3">
@@ -381,18 +402,18 @@ footer,.cta-band{background:#0c0b09}
   </div>
 </section>
 
-<section id="cases" style="background:#efe9de">
+<section id="cases" style="background:#efe9de" hidden>
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">Практика</p>
       <h2>Кейсы</h2>
-      <p>Примеры задач и результатов. Публикуются владельцем — каждая карточка редактируется в панели управления.</p>
+      <p>Обезличенные примеры из практики. Исход каждого дела зависит от его обстоятельств.</p>
     </div>
     <div class="grid cases reveal" id="caseGrid"></div>
   </div>
 </section>
 
-<section id="articles">
+<section id="articles" hidden>
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">Блог</p>
@@ -437,12 +458,13 @@ footer,.cta-band{background:#0c0b09}
       <p style="margin:0 auto">Коротко о том, что чаще всего спрашивают перед обращением.</p>
     </div>
     <div class="faq-list reveal">
-      <details class="faq-item"><summary>Есть ли у меня перспектива в деле?<span class="pl">+</span></summary><div class="ans">Это главное, что стоит выяснить в начале. На консультации я честно оцениваю шансы и риски — если перспектив нет, скажу прямо, а не буду тянуть время и деньги.</div></details>
-      <details class="faq-item"><summary>Сколько стоят услуги?<span class="pl">+</span></summary><div class="ans">Зависит от задачи и объёма работы. После оценки ситуации называю понятную стоимость и условия — без скрытых платежей. Первая оценка перспектив обсуждается отдельно.</div></details>
-      <details class="faq-item"><summary>Как проходит консультация?<span class="pl">+</span></summary><div class="ans">Вы описываете ситуацию, я задаю уточняющие вопросы, разбираю варианты и предлагаю план действий. По итогу у вас есть понимание рисков и следующих шагов.</div></details>
-      <details class="faq-item"><summary>Работаете онлайн или только очно?<span class="pl">+</span></summary><div class="ans">И так, и так. Консультации и часть работы ведутся онлайн; в суде и на встречах — очно. Формат подбираем под вашу ситуацию и местоположение.</div></details>
-      <details class="faq-item"><summary>Сохраняется ли конфиденциальность?<span class="pl">+</span></summary><div class="ans">Да. Всё, что вы рассказываете, остаётся между нами. Конфиденциальность — обязательное условие работы.</div></details>
-      <details class="faq-item"><summary>Сколько времени занимает дело?<span class="pl">+</span></summary><div class="ans">Сроки зависят от категории спора и инстанций. На консультации даю реалистичную оценку по этапам, чтобы вы понимали горизонт, а не ждали «в неизвестности».</div></details>
+      <details class="faq-item"><summary>Есть ли у меня перспектива в деле?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">Это главное, что стоит выяснить в начале. На консультации я честно оцениваю шансы и риски — если перспектив нет, скажу прямо, а не буду тянуть время и деньги.</div></details>
+      <details class="faq-item"><summary>Сколько стоят услуги?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">Зависит от задачи и объёма работы. После оценки ситуации называю понятную стоимость и условия — без скрытых платежей.</div></details>
+      <details class="faq-item"><summary>Как записаться на консультацию?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">Напишите через любой канал в разделе «Контакты»: коротко опишите ситуацию — я отвечу и согласую формат и время. Вопросы по конкретному делу лучше обсуждать там же, а не с ассистентом.</div></details>
+      <details class="faq-item"><summary>Как проходит консультация?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">Вы описываете ситуацию, я задаю уточняющие вопросы, разбираю варианты и предлагаю план действий. По итогу у вас есть понимание рисков и следующих шагов.</div></details>
+      <details class="faq-item"><summary>Работаете онлайн или только очно?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">И так, и так. Консультации и часть работы ведутся онлайн; в суде и на встречах — очно. Формат подбираем под вашу ситуацию и местоположение.</div></details>
+      <details class="faq-item"><summary>Сохраняется ли конфиденциальность?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">Да. Всё, что вы рассказываете, остаётся между нами. Конфиденциальность — обязательное условие работы.</div></details>
+      <details class="faq-item"><summary>Сколько времени занимает дело?<span class="pl" aria-hidden="true">+</span></summary><div class="ans">Сроки зависят от категории спора и инстанций. На консультации даю реалистичную оценку по этапам, чтобы вы понимали горизонт, а не ждали «в неизвестности».</div></details>
     </div>
   </div>
 </section>
@@ -453,7 +475,7 @@ footer,.cta-band{background:#0c0b09}
     <h2>Опишите ситуацию — предложу решение</h2>
     <p>Первая оценка перспектив — без обязательств. Отвечаю лично.</p>
     <div class="cta">
-      <a class="btn btn-light" href="#contact">Записаться на консультацию <span class="arrow">→</span></a>
+      <a class="btn btn-light" href="#contact">Записаться на консультацию <span class="arrow" aria-hidden="true">→</span></a>
       <button class="btn btn-outline" onclick="openAI()">Спросить ИИ-ассистента</button>
     </div>
   </div>
@@ -465,36 +487,45 @@ footer,.cta-band{background:#0c0b09}
       <p class="eyebrow">Контакты</p>
       <h2 style="font-size:clamp(30px,4.6vw,48px);margin:0 0 16px">Расскажите о вашей ситуации</h2>
       <p style="color:var(--ink2);margin:0 0 26px">Опишите задачу — отвечу и предложу формат работы. Первая оценка перспектив — без обязательств.</p>
-      <form class="cform" id="cform" onsubmit="return sendForm(event)">
+      <p id="cNoForm" style="color:var(--ink2);margin:0 0 26px">Выберите удобный канал связи — отвечу лично.</p>
+      <form class="cform" id="cform" onsubmit="return sendForm(event)" hidden>
         <div class="field"><label>Имя</label><input name="name" required placeholder="Как к вам обращаться"></div>
         <div class="mrow" style="gap:14px">
           <div class="field" style="flex:1"><label>Телефон</label><input name="phone" placeholder="+7 ___ ___ __ __"></div>
           <div class="field" style="flex:1"><label>Email</label><input name="email" type="email" placeholder="you@mail.kz"></div>
         </div>
         <div class="field"><label>Коротко о деле</label><textarea name="msg" rows="4" required placeholder="Суть ситуации, что нужно"></textarea></div>
-        <button class="btn btn-pri" type="submit" style="justify-content:center">Отправить заявку <span class="arrow">→</span></button>
+        <button class="btn btn-pri" type="submit" style="justify-content:center">Отправить заявку <span class="arrow" aria-hidden="true">→</span></button>
       </form>
     </div>
     <div class="cinfo reveal d1">
-      <div class="row"><div class="ic">✉</div><div><div class="k">Email</div><a class="v" id="cEmail" href="mailto:hello@example.kz">hello@example.kz</a></div></div>
-      <div class="row"><div class="ic">☎</div><div><div class="k">Телефон</div><a class="v" id="cPhone" href="tel:+70000000000">+7 (000) 000-00-00</a></div></div>
-      <div class="row"><div class="ic">◍</div><div><div class="k">WhatsApp</div><a class="v" id="cWa" target="_blank" rel="noopener noreferrer" href="https://wa.me/70000000000">Написать в WhatsApp</a></div></div>
-      <div class="row"><div class="ic">◆</div><div><div class="k">Telegram</div><a class="v" id="cTg" target="_blank" rel="noopener noreferrer" href="https://t.me/">@username</a></div></div>
-      <div class="row"><div class="ic">◎</div><div><div class="k">Instagram</div><a class="v" id="cInsta" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/dias.turkenov/">@dias.turkenov</a></div></div>
-      <div class="row"><div class="ic">⌖</div><div><div class="k">Адрес</div><div class="v" id="cAddr">Казахстан · приём по записи</div></div></div>
-      <div class="row"><div class="ic">◴</div><div><div class="k">Часы работы</div><div class="v" id="cHours">Пн–Пт, 10:00–19:00</div></div></div>
-      <div class="row"><div class="ic">▲</div><div><div class="k">Формат</div><div class="v" id="cFormat">Онлайн и очно</div></div></div>
-      <div style="font-size:12.5px;color:var(--mut);line-height:1.5;margin-top:4px">Контакты — заглушки. Замените на реальные в панели владельца (кнопка слева внизу → «Контакты»).</div>
+      <div class="row" hidden><div class="ic" aria-hidden="true">✉</div><div><div class="k">Email</div><a class="v" id="cEmail" href="#contact"></a></div></div>
+      <div class="row" hidden><div class="ic" aria-hidden="true">☎</div><div><div class="k">Телефон</div><a class="v" id="cPhone" href="#contact"></a></div></div>
+      <div class="row" hidden><div class="ic" aria-hidden="true">◍</div><div><div class="k">WhatsApp</div><a class="v" id="cWa" target="_blank" rel="noopener noreferrer" href="#contact">Написать в WhatsApp</a></div></div>
+      <div class="row" hidden><div class="ic" aria-hidden="true">◆</div><div><div class="k">Telegram</div><a class="v" id="cTg" target="_blank" rel="noopener noreferrer" href="#contact"></a></div></div>
+      <div class="row"><div class="ic" aria-hidden="true">◎</div><div><div class="k">Instagram</div><a class="v" id="cInsta" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/dias.turkenov/">@dias.turkenov</a></div></div>
+      <div class="row"><div class="ic" aria-hidden="true">⌖</div><div><div class="k">Адрес</div><div class="v" id="cAddr">Казахстан · приём по записи</div></div></div>
+      <div class="row" hidden><div class="ic" aria-hidden="true">◴</div><div><div class="k">Часы работы</div><div class="v" id="cHours"></div></div></div>
+      <div class="row"><div class="ic" aria-hidden="true">▲</div><div><div class="k">Формат</div><div class="v" id="cFormat">Онлайн и очно</div></div></div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="Turkenov Consulting"><img class="footer-lock" src="logo-light.png" alt="Turkenov Consulting" width="108" height="72"></a>
+    <a class="logo" href="#top" id="footHome" aria-label="Turkenov Consulting — наверх"><img class="footer-lock" src="logo-light.png" alt="" width="108" height="72"></a>
+    <div class="foot-links"><a href="#contact" id="footContact">Контакты</a><a href="#privacy" id="footPrivacy">Политика конфиденциальности</a></div>
     <div style="font-size:13px">© <span id="yr"></span> Диас Туркенов · <span id="footRole">Судебный юрист</span></div>
   </div>
 </footer>
+
+<!-- Privacy policy view (linkable: #privacy) -->
+<div class="policy" id="privacy" role="dialog" aria-modal="true" aria-labelledby="polTitle" hidden>
+  <div class="sheet">
+    <div class="ptop"><h2 id="polTitle" tabindex="-1">Политика конфиденциальности</h2><button class="px" id="polClose" aria-label="Закрыть">×</button></div>
+    <div id="polBody"></div>
+  </div>
+</div>
 
 <!-- Owner toolbar (видна только владельцу) -->
 <button id="ownerBtn" onclick="openAdmin()" style="display:none;position:fixed;left:22px;bottom:22px;z-index:60;
@@ -506,14 +537,14 @@ footer,.cta-band{background:#0c0b09}
 <button id="aiBtn" onclick="openAI()"><span class="pulse"></span> ИИ-ассистент</button>
 <div id="aiPanel">
   <div class="ai-h">
-    <div class="av"><img src="mono-light.png" alt="TC"></div>
-    <div><div class="t">Ассистент юриста</div><div class="s" id="aiStatus">Отвечает на общие вопросы</div></div>
-    <button class="x" onclick="closeAI()">×</button>
+    <div class="av"><img src="mono-light.png" alt=""></div>
+    <div><div class="t" id="aiTitle">Ассистент юриста</div><div class="s" id="aiStatus">Отвечает на общие вопросы</div></div>
+    <button class="x" id="aiClose" onclick="closeAI()" aria-label="Закрыть ассистента">×</button>
   </div>
-  <div class="ai-log" id="aiLog"></div>
+  <div class="ai-log" id="aiLog" role="log" aria-live="polite"></div>
   <div class="chips" id="aiChips"></div>
-  <div class="ai-in"><input id="aiInput" placeholder="Ваш вопрос…" onkeydown="if(event.key==='Enter')aiSend()"><button onclick="aiSend()">➤</button></div>
-  <div class="ai-dis">Это общая информация, а не юридическая консультация. Для оценки вашей ситуации запишитесь на приём.</div>
+  <div class="ai-in"><input id="aiInput" aria-label="Ваш вопрос" placeholder="Ваш вопрос…" onkeydown="if(event.key==='Enter')aiSend()"><button id="aiSendBtn" onclick="aiSend()" aria-label="Отправить">➤</button></div>
+  <div class="ai-dis"><span id="aiDisText">Это общая информация, а не юридическая консультация. Для оценки вашей ситуации запишитесь на приём.</span> <a href="#privacy" id="aiPrivacy">Политика конфиденциальности</a></div>
 </div>
 
 <!-- Admin modal -->
@@ -583,7 +614,23 @@ var ICONS=[
  _IC+'<path d="M4 5h16v10H9l-4 4v-4H4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>'
 ];
 
-/* ---------- данные по умолчанию (образцы, редактируются) ---------- */
+/* ===================================================================
+   ПОДТВЕРЖДЁННЫЕ ВЛАДЕЛЬЦЕМ ДАННЫЕ (статический хостинг, напр. GitHub Pages)
+   Заполняйте только проверенными значениями. Пустое поле = строка скрыта.
+   Кейсы: только одобренные и обезличенные, текст на ru / kk / en.
+   Пример кейса:
+   {area:{ru:'Взыскание долга',kk:'Қарызды өндіру',en:'Debt recovery'},
+    title:{ru:'...',kk:'...',en:'...'},   // суть вопроса
+    work:{ru:'...',kk:'...',en:'...'},    // что сделал юрист
+    res:{ru:'...',kk:'...',en:'...'}}     // фактический результат или текущий статус
+   Статья: {title:{ru,kk,en}, body:{ru,kk,en}, date:'2026'}
+   =================================================================== */
+var SITE={
+  contacts:{email:'',phone:'',wa:'',tg:'',insta:'https://www.instagram.com/dias.turkenov/',addr:'',hours:''},
+  cases:[],
+  articles:[]
+};
+/* ---------- данные по умолчанию ---------- */
 var SERVICES=[
   {ic:'§',t:'Судебные споры',d:'Ведение дел в судах всех инстанций: иски, возражения, доказательства, участие в заседаниях.'},
   {ic:'⚖',t:'Сопровождение бизнеса',d:'Юридическая поддержка компаний: сделки, проверки контрагентов, снижение рисков.'},
@@ -591,16 +638,6 @@ var SERVICES=[
   {ic:'₸',t:'Взыскание задолженности',d:'Досудебное урегулирование и суд: возврат долгов, неустойки, исполнение решений.'},
   {ic:'▣',t:'Корпоративные споры',d:'Конфликты участников, оспаривание сделок и решений, защита доли и активов.'},
   {ic:'◇',t:'Консультации',d:'Разовая оценка ситуации, стратегия и понятный план действий по вашему вопросу.'}
-];
-var LBL={sample:'образец',more:'Подробнее'};
-var SAMPLE_CASES=[
-  {area:'Корпоративный спор',title:'Защита доли в ТОО',res:'Оспорили вывод активов, доля доверителя сохранена.',sample:true},
-  {area:'Взыскание долга',title:'Возврат задолженности по поставке',res:'Взыскан основной долг и неустойка, решение исполнено.',sample:true},
-  {area:'Договорный спор',title:'Расторжение невыгодного контракта',res:'Договор расторгнут без штрафов для клиента.',sample:true}
-];
-var SAMPLE_ARTS=[
-  {title:'Как подготовиться к суду: чек-лист',excerpt:'Документы, доказательства и типичные ошибки до первого заседания.',date:'2025',sample:true},
-  {title:'Договор, который защищает',excerpt:'5 условий, которые чаще всего спасают бизнес в споре.',date:'2025',sample:true}
 ];
 
 /* ---------- рендер ---------- */
@@ -611,24 +648,31 @@ function renderServices(){var g=document.getElementById('svcGrid');g.innerHTML='
 renderServices();
 
 function esc(s){return (s||'').replace(/[&<>]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]);});}
-function renderCases(items,isSample){
-  window.__SC=isSample;
+function loc(v){if(v==null)return '';if(typeof v==='string')return v;return v[CURLANG]||v.ru||v.en||v.kk||'';}
+var CUR_CASES=SITE.cases,CUR_ARTS=SITE.articles;
+function renderCases(items){
+  CUR_CASES=items||[];
+  var show=CUR_CASES.filter(function(c){return loc(c.title||c.issue);});
+  document.getElementById('cases').hidden=!show.length;
+  var nav=document.querySelector('#menu a[href="#cases"]');if(nav)nav.hidden=!show.length;
   var g=document.getElementById('caseGrid');g.innerHTML='';
-  items.forEach(function(c){
-    var b=(c.sample||isSample)?'<span class="badge">'+LBL.sample+'</span>':'';
-    var card=el('<div class="ccard">'+b+'<div class="top"><div class="area">'+esc(c.area)+'</div><h3>'+esc(c.title)+'</h3></div><div class="res">'+esc(c.res)+'</div><div class="foot"><span class="more">'+LBL.more+' →</span></div></div>');
-    card.querySelector('.more').onclick=function(){alert((c.title||'')+'\n\n'+(c.body||c.res||''));};
-    g.appendChild(card);
+  show.forEach(function(c){
+    var work=loc(c.work||c.body),res=loc(c.res||c.result);
+    var h='<div class="ccard"><div class="top"><div class="area">'+esc(loc(c.area))+'</div><h3>'+esc(loc(c.title||c.issue))+'</h3></div><dl>';
+    if(work)h+='<dt>'+esc(t('lbl_work'))+'</dt><dd>'+esc(work)+'</dd>';
+    if(res)h+='<dt>'+esc(t('lbl_result'))+'</dt><dd>'+esc(res)+'</dd>';
+    g.appendChild(el(h+'</dl><div class="foot"></div></div>'));
   });
   obserAll();
 }
-function renderArts(items,isSample){
-  window.__SA=isSample;
+function renderArts(items){
+  CUR_ARTS=items||[];
+  var show=CUR_ARTS.filter(function(a){return loc(a.title);});
+  document.getElementById('articles').hidden=!show.length;
   var g=document.getElementById('artList');g.innerHTML='';
-  items.forEach(function(a){
-    var tag=(a.sample||isSample)?(' · '+LBL.sample):'';
-    var d=el('<details class="art-acc"><summary><div class="ahead"><div class="ameta">'+esc(a.date||'')+tag+'</div><h3>'+esc(a.title)+'</h3></div><span class="pl">+</span></summary><div class="art-body"></div></details>');
-    d.querySelector('.art-body').textContent=(a.body||a.excerpt||'');
+  show.forEach(function(a){
+    var d=el('<details class="art-acc"><summary><div class="ahead"><div class="ameta">'+esc(String(a.date||''))+'</div><h3>'+esc(loc(a.title))+'</h3></div><span class="pl" aria-hidden="true">+</span></summary><div class="art-body"></div></details>');
+    d.querySelector('.art-body').textContent=loc(a.body)||loc(a.excerpt);
     g.appendChild(d);
   });
   obserAll();
@@ -636,7 +680,6 @@ function renderArts(items,isSample){
 /* ---------- анимации ---------- */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
 function obserAll(){document.querySelectorAll('.reveal:not(.in)').forEach(function(x){io.observe(x);});}
-renderCases(SAMPLE_CASES,true);renderArts(SAMPLE_ARTS,true);
 obserAll();
 addEventListener('load',obserAll);
 setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(x){var r=x.getBoundingClientRect();if(r.top<innerHeight*1.1)x.classList.add('in');});},1200);
@@ -648,8 +691,12 @@ var hdr=document.getElementById('hdr');
 addEventListener('scroll',function(){hdr.classList.toggle('scrolled',scrollY>30);});
 // мобильное меню
 var menu=document.getElementById('menu'),burger=document.getElementById('burger');
-burger.onclick=function(){menu.classList.toggle('open');};
-menu.querySelectorAll('a').forEach(function(a){a.onclick=function(){menu.classList.remove('open');};});
+var mqMob=matchMedia('(max-width:980px)');
+function setMenu(o){menu.classList.toggle('open',o);burger.setAttribute('aria-expanded',o?'true':'false');menu.inert=!o&&mqMob.matches;}
+burger.onclick=function(){setMenu(!menu.classList.contains('open'));};
+menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+if(mqMob.addEventListener)mqMob.addEventListener('change',function(){setMenu(false);});
+setMenu(false);
 
 /* ---------- capabilities: db + sample + user ---------- */
 var db=null,sampleFn=null,ME=null;
@@ -672,7 +719,7 @@ function initDB(){
     db.collection('cases').orderBy('ts','desc').onSnapshot(function(snap){
       var items=(snap&&snap.docs?snap.docs:[]).map(function(d){var o=Object.assign({},d.data()||{});o.id=d.id;return o;}).filter(function(o){return !o._del;});
       statCases=items.length;
-      renderCases(items.length?items:SAMPLE_CASES, items.length===0);
+      renderCases(items.length?items:SITE.cases);
       renderCaseAdmin(items);
       if(document.getElementById('adminModal').classList.contains('open'))renderStats();
     });
@@ -681,29 +728,33 @@ function initDB(){
     db.collection('articles').orderBy('ts','desc').onSnapshot(function(snap){
       var items=(snap&&snap.docs?snap.docs:[]).map(function(d){var o=Object.assign({},d.data()||{});o.id=d.id;return o;}).filter(function(o){return !o._del;});
       statArts=items.length;
-      renderArts(items.length?items:SAMPLE_ARTS, items.length===0);
+      renderArts(items.length?items:SITE.articles);
       renderArtAdmin(items);
       if(document.getElementById('adminModal').classList.contains('open'))renderStats();
     });
   }catch(e){}
   try{
     db.doc('settings/contacts').onSnapshot(function(doc){
-      var v=doc&&doc.data?doc.data():null;if(v){applyContacts(v);}
+      var v=doc&&doc.data?doc.data():null;if(v){renderContacts(v);}
     });
   }catch(e){}
 }
-function applyContacts(v){
-  window.__contactsCustom=true;
-  if(v.email){var e=document.getElementById('cEmail');e.textContent=v.email;e.href='mailto:'+v.email;}
-  if(v.phone){var p=document.getElementById('cPhone');p.textContent=v.phone;p.href='tel:'+v.phone.replace(/[^+\d]/g,'');}
-  if(v.wa){var w=document.getElementById('cWa');var num=v.wa.replace(/[^\d]/g,'');w.href='https://wa.me/'+num;w.textContent='Написать в WhatsApp';}
-  if(v.tg){var t=document.getElementById('cTg');var u=v.tg.replace(/^@/,'').replace('https://t.me/','');t.href='https://t.me/'+u;t.textContent='@'+u;}
-  if(v.insta){var ig=document.getElementById('cInsta');ig.href=(v.insta.indexOf('http')===0?v.insta:'https://instagram.com/'+v.insta.replace(/^@/,''));ig.textContent='@'+v.insta.replace(/^@/,'').replace(/^https?:\/\/(www\.)?instagram\.com\//,'').replace(/\/$/,'');}
-  if(v.addr){document.getElementById('cAddr').textContent=v.addr;}
-  if(v.hours){document.getElementById('cHours').textContent=v.hours;}
-  // заполнить форму текущими значениями
-  var map={s_email:'email',s_phone:'phone',s_wa:'wa',s_tg:'tg',s_insta:'insta',s_addr:'addr',s_hours:'hours'};
-  for(var id in map){var elm=document.getElementById(id);if(elm&&v[map[id]]!=null&&elm.value==='')elm.value=v[map[id]];}
+var CONTACTS={};
+function renderContacts(v){
+  var src=v||{},c={};
+  ['email','phone','wa','tg','insta','addr','hours'].forEach(function(k){var x=src[k]!=null?String(src[k]).trim():'';c[k]=x||SITE.contacts[k]||'';});
+  CONTACTS=c;
+  function row(id,on){var e=document.getElementById(id),r=e&&e.closest('.row');if(r)r.hidden=!on;return e;}
+  var e=row('cEmail',!!c.email);if(c.email){e.textContent=c.email;e.href='mailto:'+c.email;}
+  var p=row('cPhone',!!c.phone);if(c.phone){p.textContent=c.phone;p.href='tel:'+c.phone.replace(/[^+\d]/g,'');}
+  var w=row('cWa',!!c.wa);if(c.wa){w.href='https://wa.me/'+c.wa.replace(/[^\d]/g,'');}
+  var tg=row('cTg',!!c.tg);if(c.tg){var u=c.tg.replace(/^@/,'').replace(/^https?:\/\/t\.me\//,'');tg.href='https://t.me/'+u;tg.textContent='@'+u;}
+  var ig=row('cInsta',!!c.insta);if(c.insta){ig.href=(c.insta.indexOf('http')===0?c.insta:'https://www.instagram.com/'+c.insta.replace(/^@/,''));ig.textContent='@'+c.insta.replace(/^@/,'').replace(/^https?:\/\/(www\.)?instagram\.com\//,'').replace(/\/$/,'');}
+  document.getElementById('cAddr').textContent=c.addr||t('con_addr');
+  var h=row('cHours',!!c.hours);if(c.hours)h.textContent=c.hours;
+  document.getElementById('cform').hidden=!c.email;document.getElementById('cNoForm').hidden=!!c.email;
+  if(v){var map={s_email:'email',s_phone:'phone',s_wa:'wa',s_tg:'tg',s_insta:'insta',s_addr:'addr',s_hours:'hours'};
+    for(var id in map){var elm=document.getElementById(id);if(elm&&v[map[id]]!=null&&elm.value==='')elm.value=v[map[id]];}}
 }
 
 /* ---------- admin ---------- */
@@ -764,9 +815,9 @@ function clear(ids){ids.forEach(function(id){document.getElementById(id).value='
 
 /* ---------- контакт-форма ---------- */
 function sendForm(e){e.preventDefault();var f=e.target;
-  var email=document.getElementById('cEmail').textContent||'hello@example.kz';
+  var email=CONTACTS.email;if(!email)return false;
   var body=encodeURIComponent('Имя: '+f.name.value+'\nТелефон: '+f.phone.value+'\nEmail: '+f.email.value+'\n\n'+f.msg.value);
-  window.location.href='mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent('Заявка с сайта')+'&body='+body;
+  window.location.href='mailto:'+email+'?subject='+encodeURIComponent('Заявка с сайта')+'&body='+body;
   bump('leads');toast('Открываю почту для отправки…');return false;
 }
 
@@ -777,11 +828,12 @@ var FAQ_L={
  ru:{f:[
   {k:['услуг','чем помога','что дела','направлен','специализац','чем занима','сфер','какие дела'],a:'Диас ведёт судебные споры, взыскание долгов, договорную и корпоративную работу, сопровождает бизнес. Опишите задачу в разделе «Контакты» — он предложит формат работы.'},
   {k:['цен','стоим','сколько стоит','прайс','оплат','гонорар','дорого','бюджет'],a:'Стоимость зависит от задачи и объёма работы, без скрытых платежей. Точную сумму Диас называет после оценки ситуации — оставьте заявку в «Контактах».'},
-  {k:['запис','консультац','встреч','как обрат','связать','записаться','приём','прием','назначить'],a:'Запишитесь через форму в разделе «Контакты»: коротко опишите ситуацию и оставьте телефон или email — Диас свяжется с вами.'},
+  {k:['запис','консультац','встреч','как обрат','связать','записаться','приём','прием','назначить'],a:'Напишите через любой канал в разделе «Контакты»: коротко опишите ситуацию — Диас ответит и согласует формат и время.'},
   {k:['долг','взыскан','не плат','задолж','неустойк','вернуть деньги','должник'],a:'Взыскание обычно идёт от досудебной претензии к суду и исполнению решения. Детали Диас разберёт на консультации.'},
   {k:['тоо','корпоратив','учредит','доля','партнёр','партнер','участник','совладел'],a:'Корпоративные споры — защита доли, конфликты участников, оспаривание сделок. Опишите ситуацию в «Контактах».'},
-  {k:['договор','контракт','сделк','соглашен'],a:'Диас составляет и проверяет договоры, чтобы они защищали ваши интересы. Пришлите задачу через форму «Контакты».'},
+  {k:['договор','контракт','сделк','соглашен'],a:'Диас составляет и проверяет договоры, чтобы они защищали ваши интересы. Опишите задачу в разделе «Контакты».'},
   {k:['суд','иск','спор','ответчик','истец','заседан','апелляц','обжалов','подать в суд'],a:'По судебным спорам Диас оценивает перспективы, готовит документы и представляет вас в суде. Опишите ситуацию в «Контактах» — это общая информация, а не консультация по делу.'},
+  {k:['политик','персональн','cookie','куки','храните','хранит'],a:'Как сайт обращается с данными, описано в «Политике конфиденциальности» — ссылка внизу страницы и под окном ассистента. Вопросы ассистенту обрабатываются в браузере и никуда не отправляются.'},
   {k:['конфиденц','тайн','анонимн','секрет','данные останут'],a:'Да, всё, что вы рассказываете, остаётся между вами и Диасом. Конфиденциальность — обязательное условие работы.'},
   {k:['онлайн','удал','дистанц','очно','лично встрет','зум','zoom','whatsapp','переписк','другом город'],a:'Диас работает и онлайн, и очно: консультации часто онлайн, суд и встречи — очно. Формат подбирается под вашу ситуацию.'},
   {k:['сколько времени','срок','как долго','как быстро','длит','когда резуль'],a:'Сроки зависят от категории спора и инстанций. На консультации Диас даёт реалистичную оценку по этапам.'},
@@ -793,31 +845,33 @@ var FAQ_L={
   {k:['язык','казахск','английск','на каком язык','english'],a:'Консультации возможны на русском, казахском и английском. Пишите на удобном вам языке.'}
  ],d:'Я подсказываю по частым вопросам — услуги, цены, запись, сроки, конфиденциальность. По вашему конкретному делу надёжнее оставить заявку в разделе «Контакты» — Диас ответит лично.'},
  kk:{f:[
-  {k:['қызмет','көмек','немен айналыс','бағыт','мамандан','қандай іс'],a:'Диас сот дауларын, қарыз өндіруді, шарттық және корпоративтік жұмысты жүргізеді, бизнесті алып жүреді. «Контактілер» бөлімінде міндетті сипаттаңыз — ол жұмыс форматын ұсынады.'},
-  {k:['баға','құн','қанша тұр','ақы','төлем','қымбат'],a:'Құны тапсырма мен жұмыс көлеміне байланысты, жасырын төлемсіз. Нақты сомасын Диас жағдайды бағалағаннан кейін айтады — «Контактілерде» өтінім қалдырыңыз.'},
-  {k:['жазыл','консультац','кездес','қалай хабарлас','байланыс','қабылдау'],a:'«Контактілер» бөліміндегі форма арқылы жазылыңыз: жағдайды қысқаша сипаттап, телефон не email қалдырыңыз — Диас сізбен хабарласады.'},
+  {k:['қызмет','көмек','немен айналыс','бағыт','мамандан','қандай іс'],a:'Диас сот дауларын, қарыз өндіруді, шарттық және корпоративтік жұмысты жүргізеді, бизнесті алып жүреді. «Байланыс» бөлімінде міндетті сипаттаңыз — ол жұмыс форматын ұсынады.'},
+  {k:['баға','құн','қанша тұр','ақы','төлем','қымбат'],a:'Құны тапсырма мен жұмыс көлеміне байланысты, жасырын төлемсіз. Нақты сомасын Диас жағдайды бағалағаннан кейін айтады — «Байланыс» бөлімінде өтінім қалдырыңыз.'},
+  {k:['жазыл','консультац','кездес','қалай хабарлас','байланыс','қабылдау'],a:'«Байланыс» бөліміндегі кез келген арна арқылы жазыңыз: жағдайды қысқаша сипаттаңыз — Диас жауап беріп, формат пен уақытты келіседі.'},
   {k:['қарыз','өндір','төлемей','берешек','айыппұл','ақшаны қайтар'],a:'Өндіру әдетте сотқа дейінгі талаптан басталып, сот пен шешімді орындауға жалғасады. Егжей-тегжейін Диас консультацияда талдайды.'},
-  {k:['жшс','корпоратив','құрылтай','үлес','серіктес','қатысушы'],a:'Корпоративтік даулар — үлесті қорғау, қатысушылар дауы, мәмілелерді даулау. Жағдайды «Контактілерде» сипаттаңыз.'},
-  {k:['шарт','келісім','мәміле','келісімшарт'],a:'Диас мүддеңізді қорғайтындай шарттарды жасайды әрі тексереді. Тапсырманы «Контактілер» формасы арқылы жіберіңіз.'},
-  {k:['сот','талап','дау','жауапкер','талапкер','отырыс','апелляц','шағым'],a:'Сот даулары бойынша Диас перспективаны бағалап, құжат дайындап, сізді сотта қорғайды. Жағдайды «Контактілерде» сипаттаңыз — бұл жалпы ақпарат.'},
+  {k:['жшс','корпоратив','құрылтай','үлес','серіктес','қатысушы'],a:'Корпоративтік даулар — үлесті қорғау, қатысушылар дауы, мәмілелерді даулау. Жағдайды «Байланыс» бөлімінде сипаттаңыз.'},
+  {k:['шарт','келісім','мәміле','келісімшарт'],a:'Диас мүддеңізді қорғайтындай шарттарды жасайды әрі тексереді. Тапсырманы «Байланыс» бөлімі арқылы жіберіңіз.'},
+  {k:['сот','талап','дау','жауапкер','талапкер','отырыс','апелляц','шағым'],a:'Сот даулары бойынша Диас перспективаны бағалап, құжат дайындап, сізді сотта қорғайды. Жағдайды «Байланыс» бөлімінде сипаттаңыз — бұл жалпы ақпарат.'},
+  {k:['саясат','cookie','деректерді сақта'],a:'Сайттың деректермен қалай жұмыс істейтіні «Құпиялылық саясатында» сипатталған — сілтеме беттің төменгі жағында және көмекші терезесінің астында. Көмекшіге қойылған сұрақтар браузерде өңделеді және ешқайда жіберілмейді.'},
   {k:['құпия','жасырын','мәлімет','дербес'],a:'Иә, айтқаныңыздың бәрі сіз бен Диастың арасында қалады. Құпиялылық — жұмыстың міндетті шарты.'},
   {k:['онлайн','қашық','қашықтан','жеке кездес','zoom','whatsapp','басқа қала'],a:'Диас онлайн да, жеке де жұмыс істейді: консультациялар көбіне онлайн, сот пен кездесулер — жеке. Формат жағдайыңызға қарай таңдалады.'},
   {k:['қанша уақыт','мерзім','қанша созыл','қашан нәтиже'],a:'Мерзім дау санаты мен сатыларға байланысты. Консультацияда Диас кезеңдер бойынша нақты баға береді.'},
   {k:['тәжірибе','кім','өзіңіз туралы','білім','мамандық','өтіл','неге сіз'],a:'Диас — сот юристі, заң ғылымдарының магистрі, дауларда 6 жылдан астам тәжірибесі бар. Толығырақ — «Мен туралы» бөлімінде.'},
   {k:['қала','өңір','қазақстан','алмат','астан','қайда','шымкент'],a:'Диас Қазақстан бойынша жұмыс істейді; бір бөлігі — онлайн, бару талқыланады. Өтінімде қалаңызды көрсетіңіз.'},
-  {k:['тегін','ақысыз','алғашқы тегін'],a:'Алғашқы перспектива бағасы хабарласқанда талқыланады. «Контактілерде» өтінім қалдырыңыз — Диас форматын айтады.'},
-  {k:['құжат','не керек','не дайында','қандай қағаз'],a:'Бағалау үшін әдетте жағдайыңыз бойынша құжаттар керек (шарттар, хат алмасу, шешімдер). Нақтысын Диас «Контактілердегі» сипаттамадан кейін айтады.'},
+  {k:['тегін','ақысыз','алғашқы тегін'],a:'Алғашқы перспектива бағасы хабарласқанда талқыланады. «Байланыс» бөлімінде өтінім қалдырыңыз — Диас форматын айтады.'},
+  {k:['құжат','не керек','не дайында','қандай қағаз'],a:'Бағалау үшін әдетте жағдайыңыз бойынша құжаттар керек (шарттар, хат алмасу, шешімдер). Нақтысын Диас «Байланыс» бөліміндегі хабарламаңыздан кейін айтады.'},
   {k:['кепіл','100%','уәде','жеңемін бе','мүмкіндік'],a:'Шынын айтсақ, іс нәтижесіне кепілдік беруге болмайды. Диас мүмкіндік пен тәуекелді тура бағалайды — жалған уәдесіз.'},
   {k:['тіл','қазақша','ағылшын','қай тілде','english'],a:'Консультациялар орыс, қазақ және ағылшын тілдерінде мүмкін. Өзіңізге ыңғайлы тілде жазыңыз.'}
- ],d:'Мен жиі қойылатын сұрақтарға — қызметтер, баға, жазылу, мерзім, құпиялылық — бойынша көмектесемін. Нақты ісіңіз бойынша «Контактілер» бөлімінде өтінім қалдырған сенімдірек — Диас жеке жауап береді.'},
+ ],d:'Мен жиі қойылатын сұрақтарға — қызметтер, баға, жазылу, мерзім, құпиялылық — бойынша көмектесемін. Нақты ісіңіз бойынша «Байланыс» бөлімінде өтінім қалдырған сенімдірек — Диас жеке жауап береді.'},
  en:{f:[
   {k:['service','help with','what do you do','area','practice','handle','what kind of'],a:'Dias handles litigation, debt recovery, contract and corporate work, and ongoing business support. Describe your matter in “Contacts” and he’ll suggest how to proceed.'},
   {k:['price','cost','how much','fee','payment','expensive','budget'],a:'Fees depend on the matter and scope, with no hidden charges. Dias gives an exact figure after assessing your situation — leave a request in “Contacts”.'},
-  {k:['book','consult','appointment','meeting','how to reach','contact','get in touch'],a:'Book through the form in “Contacts”: briefly describe your situation and leave a phone or email — Dias will get back to you.'},
+  {k:['book','consult','appointment','meeting','how to reach','contact','get in touch'],a:'Write through any channel in “Contacts”: briefly describe your situation — Dias will reply and agree the format and time.'},
   {k:['debt','recover','unpaid','owe','penalty','get money back'],a:'Recovery usually starts with a pre-court demand, then court and enforcement. Dias covers the details at a consultation.'},
   {k:['llp','corporate','shareholder','stake','partner','founder'],a:'Corporate disputes — protecting a stake, shareholder conflicts, challenging deals. Describe your situation in “Contacts”.'},
-  {k:['contract','agreement','deal'],a:'Dias drafts and reviews contracts so they protect your interests. Send the task via the “Contacts” form.'},
+  {k:['contract','agreement','deal'],a:'Dias drafts and reviews contracts so they protect your interests. Describe the task in “Contacts”.'},
   {k:['court','lawsuit','dispute','claim','defendant','hearing','appeal','sue'],a:'For disputes Dias assesses prospects, prepares documents and represents you in court. Describe your situation in “Contacts” — this is general information, not case advice.'},
+  {k:['privacy polic','personal data','cookie','store my','do you store'],a:'How the site handles data is described in the “Privacy policy” — linked at the bottom of the page and under the assistant window. Questions to the assistant are processed in your browser and are not sent anywhere.'},
   {k:['confiden','private','anonym','secret','my data'],a:'Yes — whatever you share stays between you and Dias. Confidentiality is a non-negotiable part of the work.'},
   {k:['online','remote','in person','zoom','whatsapp','another city'],a:'Dias works both online and in person: consultations are often online, court and meetings in person. The format fits your situation.'},
   {k:['how long','timeframe','how fast','duration','when result'],a:'Timelines depend on the type of dispute and the instances involved. At a consultation Dias gives a realistic estimate by stage.'},
@@ -832,7 +886,8 @@ var FAQ_L={
 function faqMatch(q){q=(q||'').toLowerCase();var s=FAQ_L[CURLANG]||FAQ_L.ru;for(var i=0;i<s.f.length;i++){for(var j=0;j<s.f[i].k.length;j++){if(q.indexOf(s.f[i].k[j])>=0)return {a:s.f[i].a,hit:true};}}return {a:s.d,hit:false};}
 function faqAnswer(q){return faqMatch(q).a;}
 function openAI(){aiOpen=true;document.getElementById('aiPanel').classList.add('open');document.getElementById('aiBtn').style.display='none';
-  if(aiHistory.length===0){aiBub('a',t('ai_greeting'));chips((I18N[CURLANG]||I18N.ru).ai_chips);}}
+  if(aiHistory.length===0){aiBub('a',t('ai_greeting'));chips((I18N[CURLANG]||I18N.ru).ai_chips);}
+  setTimeout(function(){document.getElementById('aiInput').focus();},60);}
 function closeAI(){aiOpen=false;document.getElementById('aiPanel').classList.remove('open');document.getElementById('aiBtn').style.display='flex';}
 function chips(arr){var w=document.getElementById('aiChips');w.innerHTML='';arr.forEach(function(t){var c=el('<button class="chip">'+t+'</button>');c.onclick=function(){document.getElementById('aiInput').value=t;aiSend();};w.appendChild(c);});}
 function aiBub(role,text){var l=document.getElementById('aiLog');var b=el('<div class="bub '+(role==='u'?'u':'a')+'"></div>');b.textContent=text;l.appendChild(b);l.scrollTop=l.scrollHeight;return b;}
@@ -871,7 +926,7 @@ var I18N={
   svc_eyebrow:'Направления',svc_h2:'С какими задачами помогаю',svc_p:'Фокус — на спорах и защите бизнеса. Разбираю ситуацию до деталей и довожу до результата.',
   proc_eyebrow:'Как я работаю',proc_h2:'Понятный путь от вопроса до результата',proc_p:'Вы всегда знаете, что происходит сейчас и что будет дальше.',
   proc_cards:[{t:'Заявка',d:'Вы описываете ситуацию коротко, без юридических формулировок. Отвечаю и уточняю детали.'},{t:'Оценка перспектив',d:'Честно разбираю ситуацию: риски, шансы и варианты. Без ложных обещаний.'},{t:'Стратегия и договор',d:'Согласуем план, сроки и условия. Вы понимаете, за что платите и что получите.'},{t:'Работа и результат',d:'Готовлю документы, веду переговоры и представляю вас в суде. Держу в курсе на каждом шаге.'}],
-  case_eyebrow:'Практика',case_h2:'Кейсы',case_p:'Примеры задач и результатов. Публикуются владельцем — каждая карточка редактируется в панели управления.',
+  case_eyebrow:'Практика',case_h2:'Кейсы',case_p:'Обезличенные примеры из практики. Исход каждого дела зависит от его обстоятельств.',
   art_eyebrow:'Блог',art_h2:'Статьи и разборы',art_p:'Коротко и по делу о праве, спорах и защите бизнеса.',
   lbl_sample:'образец',lbl_more:'Подробнее',
   about_eyebrow:'Обо мне',about_h2:'Юрист, который доводит спор до результата',
@@ -879,7 +934,7 @@ var I18N={
   about_creds:['Магистр юридических наук','Более 6 лет практики в судебных спорах и сопровождении бизнеса','Специализация: судебные споры, договорная и корпоративная работа'],
   about_panel_sub:'лет в юриспруденции',about_mini:['магистр права','на связи по делу','конфиденциальность','личное ведение'],
   faq_eyebrow:'Вопросы',faq_h2:'Частые вопросы',faq_p:'Коротко о том, что чаще всего спрашивают перед обращением.',
-  faq_items:[{q:'Есть ли у меня перспектива в деле?',a:'Это главное, что стоит выяснить в начале. На консультации я честно оцениваю шансы и риски — если перспектив нет, скажу прямо, а не буду тянуть время и деньги.'},{q:'Сколько стоят услуги?',a:'Зависит от задачи и объёма работы. После оценки ситуации называю понятную стоимость и условия — без скрытых платежей. Первая оценка перспектив обсуждается отдельно.'},{q:'Как проходит консультация?',a:'Вы описываете ситуацию, я задаю уточняющие вопросы, разбираю варианты и предлагаю план действий. По итогу у вас есть понимание рисков и следующих шагов.'},{q:'Работаете онлайн или только очно?',a:'И так, и так. Консультации и часть работы ведутся онлайн; в суде и на встречах — очно. Формат подбираем под вашу ситуацию и местоположение.'},{q:'Сохраняется ли конфиденциальность?',a:'Да. Всё, что вы рассказываете, остаётся между нами. Конфиденциальность — обязательное условие работы.'},{q:'Сколько времени занимает дело?',a:'Сроки зависят от категории спора и инстанций. На консультации даю реалистичную оценку по этапам, чтобы вы понимали горизонт, а не ждали «в неизвестности».'}],
+  faq_items:[{q:'Есть ли у меня перспектива в деле?',a:'Это главное, что стоит выяснить в начале. На консультации я честно оцениваю шансы и риски — если перспектив нет, скажу прямо, а не буду тянуть время и деньги.'},{q:'Сколько стоят услуги?',a:'Зависит от задачи и объёма работы. После оценки ситуации называю понятную стоимость и условия — без скрытых платежей.'},{q:'Как записаться на консультацию?',a:'Напишите через любой канал в разделе «Контакты»: коротко опишите ситуацию — я отвечу и согласую формат и время. Вопросы по конкретному делу лучше обсуждать там же, а не с ассистентом.'},{q:'Как проходит консультация?',a:'Вы описываете ситуацию, я задаю уточняющие вопросы, разбираю варианты и предлагаю план действий. По итогу у вас есть понимание рисков и следующих шагов.'},{q:'Работаете онлайн или только очно?',a:'И так, и так. Консультации и часть работы ведутся онлайн; в суде и на встречах — очно. Формат подбираем под вашу ситуацию и местоположение.'},{q:'Сохраняется ли конфиденциальность?',a:'Да. Всё, что вы рассказываете, остаётся между нами. Конфиденциальность — обязательное условие работы.'},{q:'Сколько времени занимает дело?',a:'Сроки зависят от категории спора и инстанций. На консультации даю реалистичную оценку по этапам, чтобы вы понимали горизонт, а не ждали «в неизвестности».'}],
   cta_eyebrow:'Готовы обсудить?',cta_h2:'Опишите ситуацию — предложу решение',cta_p:'Первая оценка перспектив — без обязательств. Отвечаю лично.',cta_b1:'Записаться на консультацию',cta_b2:'Спросить ИИ-ассистента',
   con_eyebrow:'Контакты',con_h2:'Расскажите о вашей ситуации',con_p:'Опишите задачу — отвечу и предложу формат работы. Первая оценка перспектив — без обязательств.',
   con_labels:['Имя','Телефон','Email','Коротко о деле'],ph_name:'Как к вам обращаться',ph_msg:'Суть ситуации, что нужно',con_submit:'Отправить заявку',
@@ -890,7 +945,17 @@ var I18N={
   ai_title:'Ассистент юриста',ai_status:'Отвечает на общие вопросы',ai_status_on:'На базе Claude · онлайн',ai_ph:'Ваш вопрос…',
   ai_dis:'Это общая информация, а не юридическая консультация. Для оценки вашей ситуации запишитесь на приём.',ai_btn:'ИИ-ассистент',
   ai_greeting:'Здравствуйте! Я ассистент Диаса Туркенова. Расскажу об услугах и помогу записаться. Чем могу помочь?',
-  ai_chips:['Какие услуги?','Как записаться?','Сколько стоит консультация?','Веду спор в суде'],ai_langname:'русском'
+  ai_chips:['Какие услуги?','Как записаться?','Сколько стоит консультация?','Веду спор в суде'],ai_langname:'русском',
+  meta_title:'Диас Туркенов — судебный юрист',meta_desc:'Судебный юрист Диас Туркенов. Сопровождение бизнеса, представительство в суде, договорная работа, взыскание задолженности, корпоративные споры.',
+  nav_menu:'Меню',ai_close:'Закрыть ассистента',ai_send:'Отправить',ai_input:'Ваш вопрос',foot_home:'Turkenov Consulting — наверх',foot_privacy:'Политика конфиденциальности',
+  lbl_work:'Что сделано',lbl_result:'Результат',con_noform:'Выберите удобный канал связи — отвечу лично.',
+  pol_title:'Политика конфиденциальности',pol_close:'Закрыть',pol_link:'Документация GitHub Pages',
+  pol:[{h:'Кратко',p:'Сайт не использует cookies, рекламные трекеры и счётчики посещаемости и не создаёт учётных записей посетителей.'},
+   {h:'ИИ-ассистент',p:'Вопросы ассистенту обрабатываются прямо в вашем браузере по списку частых вопросов. Сайт не отправляет и не сохраняет текст переписки — после закрытия страницы он исчезает.'},
+   {h:'Данные в вашем браузере',p:'В локальном хранилище браузера (localStorage) сохраняются выбранный язык и счётчики обращений к ассистенту и форме заявки. Эти данные остаются на вашем устройстве, никуда не передаются и удаляются при очистке данных сайта.'},
+   {h:'Заявки и каналы связи',p:'Сайт сам не принимает и не хранит заявки. Кнопка отправки заявки открывает ваш почтовый клиент с готовым письмом, а ссылки на мессенджеры и соцсети ведут на эти сервисы — там действуют их собственные правила.'},
+   {h:'Хостинг и шрифты',p:'Сайт размещён на GitHub Pages. По данным GitHub, IP-адрес посетителя записывается и хранится в целях безопасности. Шрифты загружаются с Google Fonts, поэтому ваш браузер передаёт Google свой IP-адрес.',link:'https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection'},
+   {h:'Вопросы о данных',p:'Напишите через любой канал из раздела «Контакты».'}]
  },
  kk:{
   nav_services:'Қызметтер',nav_process:'Қалай жұмыс істеймін',nav_cases:'Кейстер',nav_faq:'Сұрақтар',nav_contacts:'Байланыс',nav_cta:'Кеңес алу',
@@ -901,7 +966,7 @@ var I18N={
   svc_eyebrow:'Бағыттар',svc_h2:'Қандай мәселелерде көмектесемін',svc_p:'Басты бағыт — даулар мен бизнесті қорғау. Жағдайды егжей-тегжейлі талдап, нәтижеге жеткіземін.',
   proc_eyebrow:'Қалай жұмыс істеймін',proc_h2:'Сұрақтан нәтижеге дейінгі түсінікті жол',proc_p:'Сіз әрқашан қазір не болып жатқанын және әрі қарай не болатынын білесіз.',
   proc_cards:[{t:'Өтініш',d:'Жағдайды қысқаша, заң тілінсіз сипаттайсыз. Жауап беріп, нақтылаймын.'},{t:'Перспективаны бағалау',d:'Жағдайды адал талдаймын: тәуекелдер, мүмкіндіктер мен нұсқалар. Жалған уәдесіз.'},{t:'Стратегия және шарт',d:'Жоспарды, мерзімдер мен шарттарды келісеміз. Не үшін төлейтініңізді түсінесіз.'},{t:'Жұмыс және нәтиже',d:'Құжаттарды дайындап, келіссөз жүргізіп, сотта өкілдік етемін. Әр қадамнан хабардар етемін.'}],
-  case_eyebrow:'Тәжірибе',case_h2:'Кейстер',case_p:'Міндеттер мен нәтижелер мысалы. Иесі жариялайды — әр карточка басқару панелінде өңделеді.',
+  case_eyebrow:'Тәжірибе',case_h2:'Кейстер',case_p:'Тәжірибеден иесіздендірілген мысалдар. Әр істің нәтижесі оның мән-жайына байланысты.',
   art_eyebrow:'Блог',art_h2:'Мақалалар мен талдаулар',art_p:'Құқық, даулар және бизнесті қорғау туралы қысқа әрі нақты.',
   lbl_sample:'үлгі',lbl_more:'Толығырақ',
   about_eyebrow:'Мен туралы',about_h2:'Дауды нәтижеге жеткізетін юрист',
@@ -909,7 +974,7 @@ var I18N={
   about_creds:['Заң ғылымдарының магистрі','Сот даулары мен бизнесті алып жүруде 6 жылдан астам тәжірибе','Мамандану: сот даулары, шарттық және корпоративтік жұмыс'],
   about_panel_sub:'жыл заң саласында',about_mini:['заң магистрі','іс бойынша байланыста','құпиялылық','жеке жүргізу'],
   faq_eyebrow:'Сұрақтар',faq_h2:'Жиі қойылатын сұрақтар',faq_p:'Жүгінер алдында жиі қойылатын сұрақтар туралы қысқаша.',
-  faq_items:[{q:'Менің ісімде перспектива бар ма?',a:'Мұны басында анықтаған дұрыс. Консультацияда мүмкіндіктер мен тәуекелдерді адал бағалаймын — перспектива болмаса, уақыт пен ақшаны созбай, тура айтамын.'},{q:'Қызметтің құны қанша?',a:'Міндет пен жұмыс көлеміне байланысты. Жағдайды бағалағаннан кейін түсінікті баға мен шартты айтамын — жасырын төлемсіз.'},{q:'Консультация қалай өтеді?',a:'Жағдайды айтасыз, нақтылаушы сұрақтар қоямын, нұсқаларды талдап, іс-қимыл жоспарын ұсынамын. Нәтижесінде тәуекелдер мен келесі қадамдарды түсінесіз.'},{q:'Онлайн ба, әлде тек офлайн ба?',a:'Екеуі де. Консультация мен жұмыстың бір бөлігі онлайн; сот пен кездесулер — офлайн. Форматты жағдайыңызға қарай таңдаймыз.'},{q:'Құпиялылық сақтала ма?',a:'Иә. Айтқаныңыздың бәрі екеуміздің арамызда қалады. Құпиялылық — жұмыстың міндетті шарты.'},{q:'Іс қанша уақыт алады?',a:'Мерзім дау санаты мен сатыларға байланысты. Консультацияда кезеңдер бойынша нақты баға беремін.'}],
+  faq_items:[{q:'Менің ісімде перспектива бар ма?',a:'Мұны басында анықтаған дұрыс. Консультацияда мүмкіндіктер мен тәуекелдерді адал бағалаймын — перспектива болмаса, уақыт пен ақшаны созбай, тура айтамын.'},{q:'Қызметтің құны қанша?',a:'Міндет пен жұмыс көлеміне байланысты. Жағдайды бағалағаннан кейін түсінікті баға мен шартты айтамын — жасырын төлемсіз.'},{q:'Консультацияға қалай жазылуға болады?',a:'«Байланыс» бөліміндегі кез келген арна арқылы жазыңыз: жағдайды қысқаша сипаттаңыз — жауап беріп, формат пен уақытты келісемін. Нақты іс бойынша сұрақтарды көмекшімен емес, сол жерде талқылаған дұрыс.'},{q:'Консультация қалай өтеді?',a:'Жағдайды айтасыз, нақтылаушы сұрақтар қоямын, нұсқаларды талдап, іс-қимыл жоспарын ұсынамын. Нәтижесінде тәуекелдер мен келесі қадамдарды түсінесіз.'},{q:'Онлайн ба, әлде тек офлайн ба?',a:'Екеуі де. Консультация мен жұмыстың бір бөлігі онлайн; сот пен кездесулер — офлайн. Форматты жағдайыңызға қарай таңдаймыз.'},{q:'Құпиялылық сақтала ма?',a:'Иә. Айтқаныңыздың бәрі екеуміздің арамызда қалады. Құпиялылық — жұмыстың міндетті шарты.'},{q:'Іс қанша уақыт алады?',a:'Мерзім дау санаты мен сатыларға байланысты. Консультацияда кезеңдер бойынша нақты баға беремін.'}],
   cta_eyebrow:'Талқылауға дайынсыз ба?',cta_h2:'Жағдайды сипаттаңыз — шешім ұсынамын',cta_p:'Перспективаның алғашқы бағасы — міндеттемесіз. Жеке жауап беремін.',cta_b1:'Консультацияға жазылу',cta_b2:'ИИ-көмекшіден сұрау',
   con_eyebrow:'Байланыс',con_h2:'Жағдайыңызды айтыңыз',con_p:'Міндетті сипаттаңыз — жауап беріп, жұмыс форматын ұсынамын. Перспективаның алғашқы бағасы — міндеттемесіз.',
   con_labels:['Аты-жөні','Телефон','Email','Іс туралы қысқаша'],ph_name:'Сізге қалай жүгінеміз',ph_msg:'Жағдайдың мәні, не қажет',con_submit:'Өтініш жіберу',
@@ -920,7 +985,17 @@ var I18N={
   ai_title:'Юрист көмекшісі',ai_status:'Жалпы сұрақтарға жауап береді',ai_status_on:'Claude негізінде · онлайн',ai_ph:'Сұрағыңыз…',
   ai_dis:'Бұл жалпы ақпарат, заң кеңесі емес. Жағдайыңызды бағалау үшін қабылдауға жазылыңыз.',ai_btn:'ИИ-көмекші',
   ai_greeting:'Сәлеметсіз бе! Мен Диас Туркеновтың көмекшісімін. Қызметтер туралы айтып, жазылуға көмектесемін. Немен көмектесе аламын?',
-  ai_chips:['Қандай қызметтер?','Қалай жазылуға болады?','Консультация қанша тұрады?','Сотта дауым бар'],ai_langname:'қазақ тілінде'
+  ai_chips:['Қандай қызметтер?','Қалай жазылуға болады?','Консультация қанша тұрады?','Сотта дауым бар'],ai_langname:'қазақ тілінде',
+  meta_title:'Диас Туркенов — сот юристі',meta_desc:'Сот юристі Диас Туркенов. Бизнесті алып жүру, сотта өкілдік ету, шарттық жұмыс, берешекті өндіру, корпоративтік даулар.',
+  nav_menu:'Мәзір',ai_close:'Көмекшіні жабу',ai_send:'Жіберу',ai_input:'Сұрағыңыз',foot_home:'Turkenov Consulting — жоғарыға',foot_privacy:'Құпиялылық саясаты',
+  lbl_work:'Не істелді',lbl_result:'Нәтиже',con_noform:'Ыңғайлы байланыс арнасын таңдаңыз — жеке жауап беремін.',
+  pol_title:'Құпиялылық саясаты',pol_close:'Жабу',pol_link:'GitHub Pages құжаттамасы',
+  pol:[{h:'Қысқаша',p:'Сайт cookie файлдарын, жарнамалық трекерлерді және келушілер санағыштарын қолданбайды, келушілерге тіркелгі жасамайды.'},
+   {h:'ИИ-көмекші',p:'Көмекшіге қойылған сұрақтар жиі қойылатын сұрақтар тізімі бойынша тікелей браузеріңізде өңделеді. Сайт хат алмасу мәтінін жібермейді және сақтамайды — бет жабылғанда ол жойылады.'},
+   {h:'Браузеріңіздегі деректер',p:'Браузердің жергілікті жадында (localStorage) таңдалған тіл және көмекші мен өтінім формасын пайдалану санағыштары сақталады. Бұл деректер құрылғыңызда қалады, ешқайда жіберілмейді және сайт деректерін тазалағанда жойылады.'},
+   {h:'Өтінімдер және байланыс арналары',p:'Сайт өтінімдерді өзі қабылдамайды және сақтамайды. Өтінім жіберу батырмасы дайын хатпен пошта бағдарламаңызды ашады, ал мессенджерлер мен әлеуметтік желілерге сілтемелер сол сервистерге апарады — онда олардың өз ережелері қолданылады.'},
+   {h:'Хостинг және қаріптер',p:'Сайт GitHub Pages-те орналасқан. GitHub мәліметі бойынша, келушінің IP-мекенжайы қауіпсіздік мақсатында жазылып, сақталады. Қаріптер Google Fonts-тан жүктеледі, сондықтан браузеріңіз Google-ға өз IP-мекенжайын жібереді.',link:'https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection'},
+   {h:'Деректер туралы сұрақтар',p:'«Байланыс» бөліміндегі кез келген арна арқылы жазыңыз.'}]
  },
  en:{
   nav_services:'Services',nav_process:'How I work',nav_cases:'Cases',nav_faq:'FAQ',nav_contacts:'Contacts',nav_cta:'Consultation',
@@ -931,7 +1006,7 @@ var I18N={
   svc_eyebrow:'Practice areas',svc_h2:'What I help with',svc_p:'Focused on disputes and protecting business. I analyse every detail and see it through.',
   proc_eyebrow:'How I work',proc_h2:'A clear path from question to result',proc_p:'You always know what’s happening now and what comes next.',
   proc_cards:[{t:'Request',d:'You describe your situation briefly, no legal jargon. I reply and clarify the details.'},{t:'Assessment',d:'I honestly assess the risks, chances and options. No false promises.'},{t:'Strategy & agreement',d:'We agree on the plan, timeline and terms. You know what you’re paying for.'},{t:'Work & result',d:'I prepare documents, negotiate and represent you in court. You’re updated at every step.'}],
-  case_eyebrow:'Practice',case_h2:'Cases',case_p:'Examples of matters and outcomes. Published by the owner — each card is editable in the panel.',
+  case_eyebrow:'Practice',case_h2:'Cases',case_p:'Anonymised examples from practice. Every outcome depends on the facts of the matter.',
   art_eyebrow:'Blog',art_h2:'Articles & insights',art_p:'Short and practical on law, disputes and protecting business.',
   lbl_sample:'sample',lbl_more:'Details',
   about_eyebrow:'About',about_h2:'A lawyer who sees the dispute through',
@@ -939,7 +1014,7 @@ var I18N={
   about_creds:['Master of Laws','6+ years in litigation and business support','Focus: litigation, contract and corporate work'],
   about_panel_sub:'years in law',about_mini:['Master of Laws','available on your case','confidentiality','personal handling'],
   faq_eyebrow:'FAQ',faq_h2:'Frequently asked questions',faq_p:'Briefly on what people most often ask before reaching out.',
-  faq_items:[{q:'Do I have a case?',a:'That’s the key thing to clarify first. In the consultation I honestly assess your chances and risks — if there’s no prospect, I’ll say so directly rather than waste your time and money.'},{q:'How much do services cost?',a:'It depends on the matter and scope. After assessing the situation I give a clear price and terms — no hidden fees.'},{q:'How does a consultation work?',a:'You describe the situation, I ask clarifying questions, review options and propose a plan. You leave understanding the risks and next steps.'},{q:'Online or in person?',a:'Both. Consultations and part of the work are online; court and meetings are in person. We choose the format to fit your situation.'},{q:'Is it confidential?',a:'Yes. Everything you tell me stays between us. Confidentiality is a mandatory condition of my work.'},{q:'How long does a case take?',a:'It depends on the dispute type and instances. In the consultation I give a realistic, stage-by-stage estimate.'}],
+  faq_items:[{q:'Do I have a case?',a:'That’s the key thing to clarify first. In the consultation I honestly assess your chances and risks — if there’s no prospect, I’ll say so directly rather than waste your time and money.'},{q:'How much do services cost?',a:'It depends on the matter and scope. After assessing the situation I give a clear price and terms — no hidden fees.'},{q:'How do I book a consultation?',a:'Write through any channel in “Contacts”: briefly describe your situation — I’ll reply and agree the format and time. Questions about your specific matter are best raised there rather than with the assistant.'},{q:'How does a consultation work?',a:'You describe the situation, I ask clarifying questions, review options and propose a plan. You leave understanding the risks and next steps.'},{q:'Online or in person?',a:'Both. Consultations and part of the work are online; court and meetings are in person. We choose the format to fit your situation.'},{q:'Is it confidential?',a:'Yes. Everything you tell me stays between us. Confidentiality is a mandatory condition of my work.'},{q:'How long does a case take?',a:'It depends on the dispute type and instances. In the consultation I give a realistic, stage-by-stage estimate.'}],
   cta_eyebrow:'Ready to talk?',cta_h2:'Describe your situation — I’ll propose a solution',cta_p:'A first assessment with no obligation. I reply personally.',cta_b1:'Book a consultation',cta_b2:'Ask the AI assistant',
   con_eyebrow:'Contacts',con_h2:'Tell me about your situation',con_p:'Describe your matter — I’ll reply and suggest how we can work. A first assessment with no obligation.',
   con_labels:['Name','Phone','Email','Briefly about the matter'],ph_name:'Your name',ph_msg:'What happened and what you need',con_submit:'Send request',
@@ -950,31 +1025,38 @@ var I18N={
   ai_title:'Legal assistant',ai_status:'Answers general questions',ai_status_on:'Powered by Claude · online',ai_ph:'Your question…',
   ai_dis:'This is general information, not legal advice. Book a consultation to assess your situation.',ai_btn:'AI assistant',
   ai_greeting:'Hello! I’m Dias Turkenov’s assistant. I can tell you about services and help you book. How can I help?',
-  ai_chips:['What services?','How to book?','How much is a consultation?','I have a court dispute'],ai_langname:'English'
+  ai_chips:['What services?','How to book?','How much is a consultation?','I have a court dispute'],ai_langname:'English',
+  meta_title:'Dias Turkenov — litigation lawyer',meta_desc:'Litigation lawyer Dias Turkenov, Kazakhstan. Business support, court representation, contract work, debt recovery and corporate disputes.',
+  nav_menu:'Menu',ai_close:'Close assistant',ai_send:'Send',ai_input:'Your question',foot_home:'Turkenov Consulting — back to top',foot_privacy:'Privacy policy',
+  lbl_work:'What was done',lbl_result:'Outcome',con_noform:'Choose whichever channel suits you — I reply personally.',
+  pol_title:'Privacy policy',pol_close:'Close',pol_link:'GitHub Pages documentation',
+  pol:[{h:'In short',p:'The site uses no cookies, ad trackers or visitor analytics, and creates no visitor accounts.'},
+   {h:'AI assistant',p:'Questions to the assistant are answered in your browser from a list of common questions. The site does not send or store the conversation — it disappears when you close the page.'},
+   {h:'Data in your browser',p:'Your browser’s local storage (localStorage) keeps the chosen language and counters of assistant and request-form use. This data stays on your device, is not sent anywhere, and is removed when you clear the site’s data.'},
+   {h:'Requests and contact channels',p:'The site itself does not receive or store requests. The request button opens your email app with a prepared message, and links to messengers and social networks lead to those services, whose own rules apply.'},
+   {h:'Hosting and fonts',p:'The site is hosted on GitHub Pages. According to GitHub, a visitor’s IP address is logged and stored for security purposes. Fonts load from Google Fonts, so your browser sends its IP address to Google.',link:'https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#data-collection'},
+   {h:'Questions about data',p:'Write through any channel in the “Contacts” section.'}]
  }
 };
 var LANGDATA={
- ru:{services:[{ic:'§',t:'Судебные споры',d:'Ведение дел в судах всех инстанций: иски, возражения, доказательства, участие в заседаниях.'},{ic:'⚖',t:'Сопровождение бизнеса',d:'Юридическая поддержка компаний: сделки, проверки контрагентов, снижение рисков.'},{ic:'✎',t:'Договорная работа',d:'Разработка и экспертиза договоров так, чтобы они защищали, а не создавали проблемы.'},{ic:'₸',t:'Взыскание задолженности',d:'Досудебное урегулирование и суд: возврат долгов, неустойки, исполнение решений.'},{ic:'▣',t:'Корпоративные споры',d:'Конфликты участников, оспаривание сделок и решений, защита доли и активов.'},{ic:'◇',t:'Консультации',d:'Разовая оценка ситуации, стратегия и понятный план действий по вашему вопросу.'}],
-   cases:[{area:'Корпоративный спор',title:'Защита доли в ТОО',res:'Оспорили вывод активов, доля доверителя сохранена.',sample:true},{area:'Взыскание долга',title:'Возврат задолженности по поставке',res:'Взыскан основной долг и неустойка, решение исполнено.',sample:true},{area:'Договорный спор',title:'Расторжение невыгодного контракта',res:'Договор расторгнут без штрафов для клиента.',sample:true}],
-   arts:[{title:'Как подготовиться к суду: чек-лист',excerpt:'Документы, доказательства и типичные ошибки до первого заседания.',date:'2025',sample:true},{title:'Договор, который защищает',excerpt:'5 условий, которые чаще всего спасают бизнес в споре.',date:'2025',sample:true}]},
- kk:{services:[{ic:'§',t:'Сот даулары',d:'Барлық сатыдағы соттарда істер жүргізу: талап-арыз, қарсылық, дәлелдер, отырысқа қатысу.'},{ic:'⚖',t:'Бизнесті алып жүру',d:'Компанияларға құқықтық қолдау: мәмілелер, контрагенттерді тексеру, тәуекелді азайту.'},{ic:'✎',t:'Шарттық жұмыс',d:'Шарттарды әзірлеу және сараптау — олар мәселе тудырмай, қорғайтындай.'},{ic:'₸',t:'Берешекті өндіру',d:'Сотқа дейінгі реттеу және сот: қарызды қайтару, айыппұл, шешімді орындау.'},{ic:'▣',t:'Корпоративтік даулар',d:'Қатысушылар дауы, мәмілелер мен шешімдерді даулау, үлес пен активтерді қорғау.'},{ic:'◇',t:'Консультациялар',d:'Жағдайды бір реттік бағалау, стратегия және нақты іс-қимыл жоспары.'}],
-   cases:[{area:'Корпоративтік дау',title:'ЖШС-дегі үлесті қорғау',res:'Активтерді шығару дауланды, сенім білдірушінің үлесі сақталды.',sample:true},{area:'Қарызды өндіру',title:'Жеткізілім бойынша берешекті қайтару',res:'Негізгі қарыз бен айыппұл өндірілді, шешім орындалды.',sample:true},{area:'Шарттық дау',title:'Тиімсіз шартты бұзу',res:'Шарт клиентке айыппұлсыз бұзылды.',sample:true}],
-   arts:[{title:'Сотқа қалай дайындалу керек: чек-парақ',excerpt:'Құжаттар, дәлелдер және алғашқы отырысқа дейінгі жиі қателер.',date:'2025',sample:true},{title:'Қорғайтын шарт',excerpt:'Дауда бизнесті жиі құтқаратын 5 шарт.',date:'2025',sample:true}]},
- en:{services:[{ic:'§',t:'Litigation',d:'Handling cases in courts of all instances: claims, defenses, evidence, hearings.'},{ic:'⚖',t:'Business support',d:'Legal support for companies: deals, counterparty checks, risk reduction.'},{ic:'✎',t:'Contract work',d:'Drafting and reviewing contracts so they protect you, not create problems.'},{ic:'₸',t:'Debt recovery',d:'Pre-trial settlement and court: recovering debts, penalties, enforcing decisions.'},{ic:'▣',t:'Corporate disputes',d:'Shareholder conflicts, challenging deals and decisions, protecting shares and assets.'},{ic:'◇',t:'Consulting',d:'A one-off assessment, strategy and a clear action plan for your matter.'}],
-   cases:[{area:'Corporate dispute',title:'Protecting a stake in an LLP',res:'Asset stripping challenged; the client’s stake was preserved.',sample:true},{area:'Debt recovery',title:'Recovering a supply debt',res:'Principal debt and penalty recovered; decision enforced.',sample:true},{area:'Contract dispute',title:'Terminating an unfavorable contract',res:'Contract terminated with no penalties for the client.',sample:true}],
-   arts:[{title:'How to prepare for court: a checklist',excerpt:'Documents, evidence and common mistakes before the first hearing.',date:'2025',sample:true},{title:'A contract that protects you',excerpt:'5 clauses that most often save a business in a dispute.',date:'2025',sample:true}]}
+ ru:{services:[{ic:'§',t:'Судебные споры',d:'Ведение дел в судах всех инстанций: иски, возражения, доказательства, участие в заседаниях.'},{ic:'⚖',t:'Сопровождение бизнеса',d:'Юридическая поддержка компаний: сделки, проверки контрагентов, снижение рисков.'},{ic:'✎',t:'Договорная работа',d:'Разработка и экспертиза договоров так, чтобы они защищали, а не создавали проблемы.'},{ic:'₸',t:'Взыскание задолженности',d:'Досудебное урегулирование и суд: возврат долгов, неустойки, исполнение решений.'},{ic:'▣',t:'Корпоративные споры',d:'Конфликты участников, оспаривание сделок и решений, защита доли и активов.'},{ic:'◇',t:'Консультации',d:'Разовая оценка ситуации, стратегия и понятный план действий по вашему вопросу.'}]},
+ kk:{services:[{ic:'§',t:'Сот даулары',d:'Барлық сатыдағы соттарда істер жүргізу: талап-арыз, қарсылық, дәлелдер, отырысқа қатысу.'},{ic:'⚖',t:'Бизнесті алып жүру',d:'Компанияларға құқықтық қолдау: мәмілелер, контрагенттерді тексеру, тәуекелді азайту.'},{ic:'✎',t:'Шарттық жұмыс',d:'Шарттарды әзірлеу және сараптау — олар мәселе тудырмай, қорғайтындай.'},{ic:'₸',t:'Берешекті өндіру',d:'Сотқа дейінгі реттеу және сот: қарызды қайтару, айыппұл, шешімді орындау.'},{ic:'▣',t:'Корпоративтік даулар',d:'Қатысушылар дауы, мәмілелер мен шешімдерді даулау, үлес пен активтерді қорғау.'},{ic:'◇',t:'Консультациялар',d:'Жағдайды бір реттік бағалау, стратегия және нақты іс-қимыл жоспары.'}]},
+ en:{services:[{ic:'§',t:'Litigation',d:'Handling cases in courts of all instances: claims, defenses, evidence, hearings.'},{ic:'⚖',t:'Business support',d:'Legal support for companies: deals, counterparty checks, risk reduction.'},{ic:'✎',t:'Contract work',d:'Drafting and reviewing contracts so they protect you, not create problems.'},{ic:'₸',t:'Debt recovery',d:'Pre-trial settlement and court: recovering debts, penalties, enforcing decisions.'},{ic:'▣',t:'Corporate disputes',d:'Shareholder conflicts, challenging deals and decisions, protecting shares and assets.'},{ic:'◇',t:'Consulting',d:'A one-off assessment, strategy and a clear action plan for your matter.'}]}
 };
 function t(k){var d=I18N[CURLANG]||I18N.ru;return d[k]!=null?d[k]:(I18N.ru[k]!=null?I18N.ru[k]:'');}
 function updateAiStatus(){var e=document.getElementById('aiStatus');if(e)e.textContent=t('ai_status');}
 function _q(s){return document.querySelector(s);}
 function _setT(s,v){var e=_q(s);if(e&&v!=null)e.textContent=v;}
 function _setAll(s,a){if(!a)return;var ns=document.querySelectorAll(s);for(var i=0;i<ns.length;i++){if(a[i]!=null)ns[i].textContent=a[i];}}
+function _attr(s,a,v){var e=_q(s);if(e&&v!=null)e.setAttribute(a,v);}
 function _setPH(s,v){var e=_q(s);if(e&&v!=null)e.placeholder=v;}
 function _setLabel(s,v){var e=_q(s);if(!e||v==null)return;var tn=null,i;for(i=0;i<e.childNodes.length;i++){if(e.childNodes[i].nodeType===3&&e.childNodes[i].nodeValue.replace(/\s/g,'')){tn=e.childNodes[i];break;}}if(tn)tn.nodeValue=v+' ';else e.insertBefore(document.createTextNode(v+' '),e.firstChild);}
 function _setFirstText(e,v){if(!e||v==null)return;var tn=e.firstChild;if(tn&&tn.nodeType===3)tn.nodeValue=v;else e.insertBefore(document.createTextNode(v),e.firstChild);}
 function setLang(l){
   if(!I18N[l])l='ru';CURLANG=l;try{localStorage.setItem('dt_lang',l);}catch(e){}
   document.documentElement.lang=l;var d=I18N[l];
+  document.title=d.meta_title;var md=document.querySelector('meta[name="description"]');if(md)md.setAttribute('content',d.meta_desc);
+  burger.setAttribute('aria-label',d.nav_menu);menu.setAttribute('aria-label',d.nav_menu);
   var sw=document.getElementById('langSw');if(sw){var bs=sw.querySelectorAll('button');for(var k=0;k<bs.length;k++)bs[k].classList.toggle('on',bs[k].getAttribute('data-l')===l);}
   _setT('#menu a[href="#services"]',d.nav_services);_setT('#menu a[href="#process"]',d.nav_process);_setT('#menu a[href="#cases"]',d.nav_cases);_setT('#menu a[href="#faq"]',d.nav_faq);_setT('#menu a[href="#contact"]',d.nav_contacts);_setT('#menu a.btn-pri',d.nav_cta);
   _setT('.hero .eyebrow',d.hero_eyebrow);_setT('.hero .role',d.hero_role);_setT('.hero .lead',d.hero_lead);
@@ -985,8 +1067,7 @@ function setLang(l){
   var pc=document.querySelectorAll('#process .pcard');for(var i=0;i<pc.length;i++){var it=d.proc_cards[i];if(it){var h=pc[i].querySelector('h3'),p=pc[i].querySelector('p');if(h)h.textContent=it.t;if(p)p.textContent=it.d;}}
   _setT('#cases .sec-head .eyebrow',d.case_eyebrow);_setT('#cases .sec-head h2',d.case_h2);_setT('#cases .sec-head p:not(.eyebrow)',d.case_p);
   _setT('#articles .sec-head .eyebrow',d.art_eyebrow);_setT('#articles .sec-head h2',d.art_h2);_setT('#articles .sec-head p:not(.eyebrow)',d.art_p);
-  LBL.sample=d.lbl_sample;LBL.more=d.lbl_more;SAMPLE_CASES=LANGDATA[l].cases;SAMPLE_ARTS=LANGDATA[l].arts;
-  if(window.__SC!==false)renderCases(SAMPLE_CASES,true);if(window.__SA!==false)renderArts(SAMPLE_ARTS,true);
+  renderCases(CUR_CASES);renderArts(CUR_ARTS);
   _setT('#about .eyebrow',d.about_eyebrow);_setT('#about h2',d.about_h2);
   _setAll('#about .wrap > div:first-child > p:not(.eyebrow)',d.about_p);
   _setAll('#about .creds .cred > div:last-child',d.about_creds);
@@ -997,14 +1078,44 @@ function setLang(l){
   _setT('#contact .reveal .eyebrow',d.con_eyebrow);_setT('#contact .reveal h2',d.con_h2);_setT('#contact .reveal > p:not(.eyebrow)',d.con_p);
   _setAll('#cform label',d.con_labels);_setPH('#cform [name=name]',d.ph_name);_setPH('#cform [name=msg]',d.ph_msg);_setLabel('#cform button[type=submit]',d.con_submit);
   _setAll('#contact .cinfo .row .k',d.con_info);
-  if(!window.__contactsCustom){_setT('#cWa',d.con_wa_text);_setT('#cAddr',d.con_addr);_setT('#cHours',d.con_hours);}
-  _setT('#cFormat',d.con_format);_setT('#contact .cinfo > div:last-child',d.con_note);
-  _setT('#footRole',d.foot_role);
-  _setT('.ai-h .t',d.ai_title);_setPH('#aiInput',d.ai_ph);_setT('.ai-dis',d.ai_dis);
+  _setT('#cWa',d.con_wa_text);if(!CONTACTS.addr)_setT('#cAddr',d.con_addr);
+  _setT('#cFormat',d.con_format);_setT('#cNoForm',d.con_noform);
+  _setT('#footRole',d.foot_role);_setT('#footContact',d.nav_contacts);_setT('#footPrivacy',d.foot_privacy);_attr('#footHome','aria-label',d.foot_home);
+  _setT('#polTitle',d.pol_title);_attr('#polClose','aria-label',d.pol_close);renderPolicy();
+  _setT('.ai-h .t',d.ai_title);_setPH('#aiInput',d.ai_ph);_attr('#aiInput','aria-label',d.ai_input);_setT('#aiDisText',d.ai_dis);_setT('#aiPrivacy',d.foot_privacy);
+  _attr('#aiClose','aria-label',d.ai_close);_attr('#aiSendBtn','aria-label',d.ai_send);
   var ab=document.getElementById('aiBtn');if(ab)ab.innerHTML='<span class="pulse"></span> '+d.ai_btn;
   updateAiStatus();
 }
+renderContacts(null);
 (function(){var sv='ru';try{sv=localStorage.getItem('dt_lang')||'ru';}catch(e){}setLang(sv);})();
+
+/* ---------- политика конфиденциальности (#privacy) ---------- */
+function renderPolicy(){var b=document.getElementById('polBody');if(!b)return;b.innerHTML='';
+  (t('pol')||[]).forEach(function(x){var h=document.createElement('h3');h.textContent=x.h;b.appendChild(h);
+    var p=document.createElement('p');p.textContent=x.p;b.appendChild(p);
+    if(x.link){var pp=document.createElement('p'),a=document.createElement('a');a.href=x.link;a.target='_blank';a.rel='noopener noreferrer';a.textContent=t('pol_link');pp.appendChild(a);b.appendChild(pp);}});}
+var polPanel=document.getElementById('privacy'),polOpener=null;
+function syncPolicy(){var want=location.hash==='#privacy';
+  if(want&&polPanel.hidden){polOpener=document.activeElement;polPanel.hidden=false;document.body.style.overflow='hidden';polPanel.scrollTop=0;document.getElementById('polTitle').focus();}
+  else if(!want&&!polPanel.hidden){polPanel.hidden=true;document.body.style.overflow='';if(polOpener&&polOpener.focus&&polOpener!==document.body)polOpener.focus();}}
+function closePolicy(){if(location.hash==='#privacy')history.replaceState(null,'',location.pathname+location.search);syncPolicy();}
+document.getElementById('polClose').onclick=closePolicy;
+polPanel.addEventListener('click',function(e){if(e.target===polPanel)closePolicy();});
+addEventListener('hashchange',syncPolicy);syncPolicy();
+// перезагрузка со ссылкой на раздел: доскроллить после загрузки шрифтов и раскладки
+addEventListener('load',function(){var h=location.hash;if(!h||h==='#privacy')return;var tg=document.getElementById(decodeURIComponent(h.slice(1)));
+  if(tg&&!tg.hidden){setTimeout(function(){tg.scrollIntoView({behavior:'instant',block:'start'});},50);}});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    if(!polPanel.hidden){closePolicy();return;}
+    if(menu.classList.contains('open')){setMenu(false);burger.focus();return;}
+    if(aiOpen){closeAI();document.getElementById('aiBtn').focus();return;}
+  }
+  if(e.key==='Tab'&&!polPanel.hidden){var f=polPanel.querySelectorAll('a[href],button,[tabindex="-1"]');var first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
+});
 
 // закрыть модал по фону
 document.getElementById('adminModal').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
